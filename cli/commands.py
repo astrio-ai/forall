@@ -35,6 +35,17 @@ class SwitchCoder(Exception):
 class Commands:
     scraper = None
 
+    # Command aliases mapping (alias -> full command name)
+    COMMAND_ALIASES = {
+        "/a": "/add",
+        "/c": "/commit",
+        "/d": "/drop",
+        "/u": "/undo",
+        "/h": "/help",
+        "/q": "/quit",
+        "/r": "/reset",
+    }
+
     def clone(self):
         return Commands(
             self.io,
@@ -241,11 +252,11 @@ class Commands:
             )
 
         content = self.scraper.scrape(url)
-        
+
         # If scraping failed, don't add empty content to chat
         if not content:
             return None if return_content else None
-        
+
         content = f"Here is the content of {url}:\n\n" + content
         if return_content:
             return content
@@ -287,6 +298,9 @@ class Commands:
             cmd = cmd.replace("_", "-")
             commands.append("/" + cmd)
 
+        # Add aliases to the command list
+        commands.extend(self.COMMAND_ALIASES.keys())
+
         return commands
 
     def do_run(self, cmd_name, args):
@@ -310,8 +324,17 @@ class Commands:
         first_word = words[0]
         rest_inp = inp[len(words[0]) :].strip()
 
+        # Resolve alias if present
+        resolved_first_word = self.COMMAND_ALIASES.get(first_word, first_word)
+
         all_commands = self.get_commands()
+        # Match against both original input and resolved alias
         matching_commands = [cmd for cmd in all_commands if cmd.startswith(first_word)]
+
+        # If first_word is an alias, also include the resolved command
+        if first_word in self.COMMAND_ALIASES and resolved_first_word not in matching_commands:
+            matching_commands.append(resolved_first_word)
+
         return matching_commands, first_word, rest_inp
 
     def run(self, inp):
@@ -323,8 +346,17 @@ class Commands:
         if res is None:
             return
         matching_commands, first_word, rest_inp = res
+
+        # Resolve alias for execution
+        resolved_command = self.COMMAND_ALIASES.get(first_word, first_word)
+
         if len(matching_commands) == 1:
             command = matching_commands[0][1:]
+            self.coder.event(f"command_{command}")
+            return self.do_run(command, rest_inp)
+        elif first_word in self.COMMAND_ALIASES:
+            # Direct alias match - use resolved command
+            command = resolved_command[1:]
             self.coder.event(f"command_{command}")
             return self.do_run(command, rest_inp)
         elif first_word in matching_commands:
@@ -777,7 +809,7 @@ class Commands:
             else:
                 try:
                     raw_matched_files = list(Path(self.coder.root).glob(pattern))
-                except (IndexError, AttributeError):
+                except IndexError, AttributeError:
                     raw_matched_files = []
         except ValueError as err:
             self.io.tool_error(f"Error matching {pattern}: {err}")
@@ -934,7 +966,7 @@ class Commands:
                     abs_word = os.path.abspath(expanded_word)
                     if os.path.samefile(abs_word, f):
                         read_only_matched.append(f)
-                except (FileNotFoundError, OSError):
+                except FileNotFoundError, OSError:
                     continue
 
             for matched_file in read_only_matched:
@@ -964,6 +996,7 @@ class Commands:
         combined_output = None
         try:
             import shlex
+
             # Parse git arguments safely to prevent command injection
             git_args = ["git"] + shlex.split(args) if args.strip() else ["git"]
             env = dict(subprocess.os.environ)
@@ -1054,11 +1087,12 @@ class Commands:
         # Set shutdown flag to stop retry loops
         self.coder._shutdown_flag = True
         self.coder.event("exit", reason="/exit")
-        
+
         # Give a brief moment for cleanup
         import time
+
         time.sleep(0.1)
-        
+
         sys.exit()
 
     def cmd_quit(self, args):
@@ -1106,17 +1140,25 @@ class Commands:
 
     def basic_help(self):
         commands = sorted(self.get_commands())
-        pad = max(len(cmd) for cmd in commands)
+        # Separate aliases and regular commands
+        regular_commands = [cmd for cmd in commands if cmd not in self.COMMAND_ALIASES]
+
+        pad = max(len(cmd) for cmd in regular_commands)
         pad = "{cmd:" + str(pad) + "}"
-        for cmd in commands:
+        for cmd in regular_commands:
             cmd_method_name = f"cmd_{cmd[1:]}".replace("-", "_")
             cmd_method = getattr(self, cmd_method_name, None)
-            cmd = pad.format(cmd=cmd)
+            formatted_cmd = pad.format(cmd=cmd)
+
+            # Find aliases for this command
+            aliases = [alias for alias, full_cmd in self.COMMAND_ALIASES.items() if full_cmd == cmd]
+            alias_str = f" (alias: {', '.join(aliases)})" if aliases else ""
+
             if cmd_method:
                 description = cmd_method.__doc__
-                self.io.tool_output(f"{cmd} {description}")
+                self.io.tool_output(f"{formatted_cmd} {description}{alias_str}")
             else:
-                self.io.tool_output(f"{cmd} No description available.")
+                self.io.tool_output(f"{formatted_cmd} No description available.{alias_str}")
         self.io.tool_output()
         self.io.tool_output("Use `/help <question>` to ask questions about how to use atlas.")
 
@@ -1233,14 +1275,22 @@ class Commands:
 |:------|:----------|
 """
         commands = sorted(self.get_commands())
-        for cmd in commands:
+        # Separate aliases and regular commands
+        regular_commands = [cmd for cmd in commands if cmd not in self.COMMAND_ALIASES]
+
+        for cmd in regular_commands:
             cmd_method_name = f"cmd_{cmd[1:]}".replace("-", "_")
             cmd_method = getattr(self, cmd_method_name, None)
+
+            # Find aliases for this command
+            aliases = [alias for alias, full_cmd in self.COMMAND_ALIASES.items() if full_cmd == cmd]
+            cmd_display = f"{cmd}" + (f" (alias: {', '.join(aliases)})" if aliases else "")
+
             if cmd_method:
                 description = cmd_method.__doc__
-                res += f"| **{cmd}** | {description} |\n"
+                res += f"| **{cmd_display}** | {description} |\n"
             else:
-                res += f"| **{cmd}** | |\n"
+                res += f"| **{cmd_display}** | |\n"
 
         res += "\n"
         return res
@@ -1675,6 +1725,7 @@ def get_help_md():
 def count_commands():
     commands = [attr for attr in dir(Commands) if attr.startswith("cmd_")]
     return len(commands)
+
 
 def main():
     print(f"Number of command lines: {count_commands()}")

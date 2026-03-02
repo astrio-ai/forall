@@ -29,8 +29,7 @@ from pygments.token import Token
 from rich.color import ColorParseError
 from rich.columns import Columns
 from rich.console import Console
-from rich.markdown import Markdown, CodeBlock
-from rich.panel import Panel
+from rich.markdown import Markdown
 from rich.style import Style as RichStyle
 from rich.text import Text
 from rich.theme import Theme
@@ -45,24 +44,26 @@ from cli.footer_hints import FooterHints
 NOTIFICATION_MESSAGE = "Atlas is waiting for your input"
 
 # Custom dark theme for markdown to avoid white backgrounds
-DARK_THEME = Theme({
-    # Use repr.str style for inline code (no white background)
-    "markdown.code": "#278ef5",  # Brand blue
-    "markdown.link": "#278ef5",  # Brand blue
-    "markdown.link_url": "#278ef5 underline",
-    "markdown.h1": "bold #278ef5",
-    "markdown.h2": "bold #278ef5",
-    "markdown.h3": "bold #278ef5",
-    "markdown.emph": "italic #278ef5",
-    "markdown.strong": "bold",
-    # List styles - use brand blue (#278ef5) instead of yellow
-    "markdown.list": "#278ef5",  # Brand blue for list items
-    "markdown.list.bullet": "#278ef5",  # Brand blue for bullet points
-    "markdown.list.number": "#278ef5",  # Brand blue for numbered list numbers
-    "markdown.item.bullet": "#278ef5",  # Brand blue for bullet characters
-    "markdown.item.number": "#278ef5",  # Brand blue for number characters
-    "": "",  # Default - no background
-})
+DARK_THEME = Theme(
+    {
+        # Use repr.str style for inline code (no white background)
+        "markdown.code": "#278ef5",  # Brand blue
+        "markdown.link": "#278ef5",  # Brand blue
+        "markdown.link_url": "#278ef5 underline",
+        "markdown.h1": "bold #278ef5",
+        "markdown.h2": "bold #278ef5",
+        "markdown.h3": "bold #278ef5",
+        "markdown.emph": "italic #278ef5",
+        "markdown.strong": "bold",
+        # List styles - use brand blue (#278ef5) instead of yellow
+        "markdown.list": "#278ef5",  # Brand blue for list items
+        "markdown.list.bullet": "#278ef5",  # Brand blue for bullet points
+        "markdown.list.number": "#278ef5",  # Brand blue for numbered list numbers
+        "markdown.item.bullet": "#278ef5",  # Brand blue for bullet characters
+        "markdown.item.number": "#278ef5",  # Brand blue for number characters
+        "": "",  # Default - no background
+    }
+)
 
 
 def ensure_hash_prefix(color):
@@ -155,7 +156,7 @@ class AutoCompleter(Completer):
             try:
                 with open(fname, "r", encoding=self.encoding) as f:
                     content = f.read()
-            except (FileNotFoundError, UnicodeDecodeError, IsADirectoryError):
+            except FileNotFoundError, UnicodeDecodeError, IsADirectoryError:
                 continue
             try:
                 lexer = guess_lexer_for_filename(fname, content)
@@ -185,7 +186,11 @@ class AutoCompleter(Completer):
         if len(matches) == 1:
             cmd = matches[0]
         elif cmd not in matches:
-            return
+            # Check if cmd is an alias
+            if hasattr(self.commands, "COMMAND_ALIASES") and cmd in self.commands.COMMAND_ALIASES:
+                cmd = self.commands.COMMAND_ALIASES[cmd]
+            else:
+                return
 
         raw_completer = self.commands.get_raw_completions(cmd)
         if raw_completer:
@@ -531,7 +536,7 @@ class InputOutput:
 
     def rule(self, show_footer=False):
         """Print a blank line instead of separator.
-        
+
         Args:
             show_footer: If True, show footer hints (no separator line)
         """
@@ -802,6 +807,7 @@ class InputOutput:
         if self.pretty and self.user_input_color:
             # Display with background using Rich style
             from rich.style import Style as RichStyle
+
             text = Text(f"> {inp}")
             text.stylize(RichStyle(color=self.user_input_color, bgcolor="#2b2b2b"))
             self.console.print(text)
@@ -846,39 +852,41 @@ class InputOutput:
         """
         from prompt_toolkit.shortcuts import radiolist_dialog
         from prompt_toolkit.styles import Style as PTKStyle
-        
+
         # Define options
         options = [
             (False, "Allow Atlas to work in this folder without asking for approval"),
             (True, "Require approval of edits and commands"),
         ]
-        
-        style = PTKStyle.from_dict({
-            'dialog': 'bg:#1E1E1E',
-            'dialog.body': 'bg:#1E1E1E #9CDCFE',
-            'dialog frame.label': 'bg:#3B82F6 #FFFFFF bold',
-            'dialog.body text': '#CCCCCC',
-            'dialog.body label': '#9CDCFE',
-            'radio-checked': '#4EC9B0 bold',
-            'radio': '#9CDCFE',
-        })
-        
+
+        style = PTKStyle.from_dict(
+            {
+                "dialog": "bg:#1E1E1E",
+                "dialog.body": "bg:#1E1E1E #9CDCFE",
+                "dialog frame.label": "bg:#3B82F6 #FFFFFF bold",
+                "dialog.body text": "#CCCCCC",
+                "dialog.body label": "#9CDCFE",
+                "radio-checked": "#4EC9B0 bold",
+                "radio": "#9CDCFE",
+            }
+        )
+
         try:
             result = radiolist_dialog(
                 title="Atlas Approval Mode",
                 text=f"You are running Atlas in {folder_path}\n\n"
-                     "Since this folder is not version controlled, we recommend requiring approval of all edits and commands.\n\n"
-                     "Use arrow keys to navigate, Enter to select:",
+                "Since this folder is not version controlled, we recommend requiring approval of all edits and commands.\n\n"
+                "Use arrow keys to navigate, Enter to select:",
                 values=options,
                 default=True,  # Default to "require approval"
                 style=style,
             ).run()
-            
+
             # result is True for "require approval", False for "auto mode"
             # We return the opposite of "require_approval" for easier logic
             return result
-            
-        except (KeyboardInterrupt, EOFError):
+
+        except KeyboardInterrupt, EOFError:
             # Default to require approval if user cancels
             return True
 
@@ -1172,20 +1180,18 @@ class InputOutput:
             if self.notifications_command:
                 try:
                     import shlex
+
                     # Parse command safely to prevent injection
                     # Notifications command should be a simple command from config
                     try:
                         cmd_parts = shlex.split(self.notifications_command)
-                        result = subprocess.run(
-                            cmd_parts, shell=False, capture_output=True
-                        )
+                        result = subprocess.run(cmd_parts, shell=False, capture_output=True)
                     except ValueError:
                         # If parsing fails, quote and use shell (less safe but handles edge cases)
                         import shlex
+
                         quoted_cmd = shlex.quote(self.notifications_command)
-                        result = subprocess.run(
-                            quoted_cmd, shell=True, capture_output=True
-                        )
+                        result = subprocess.run(quoted_cmd, shell=True, capture_output=True)
                     if result.returncode != 0 and result.stderr:
                         error_msg = result.stderr.decode("utf-8", errors="replace")
                         self.tool_warning(f"Failed to run notifications command: {error_msg}")

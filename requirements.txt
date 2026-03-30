@@ -1,5 +1,5 @@
 # Core LLM and AI
-cryptography==46.0.4
+cryptography==46.0.6
 litellm>=1.75.0
 
 # Browser automation for dynamic content scraping

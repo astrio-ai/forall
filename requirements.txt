@@ -64,7 +64,7 @@ packaging>=25.0
 importlib-resources>=6.0.0
 
 # Linting
-flake8>=7.0.0
+flake8>=7.3.0
 
 # Retry logic
 backoff>=2.2.0

@@ -1,0 +1,12 @@
+name: Documentation
+description: Suggest or fix documentation in this repository
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What should change?
+      description: Link to the page or file and describe the improvement.
+    validations:
+      required: true

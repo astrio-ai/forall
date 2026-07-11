@@ -1,0 +1,7 @@
+schema: forall
+context: |
+  This project uses the Forall workflow. Write specs before code.
+  Run `forall check` before archive.
+rules:
+  verification:
+    - Run `forall check --change <name>` and fix all CRITICAL issues before archive

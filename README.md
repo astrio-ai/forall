@@ -18,6 +18,10 @@ Add `~/.local/bin` to your `PATH` if needed, then run `forall --version`.
 
 > **Note:** A binary release must exist on [GitHub Releases](https://github.com/astrio-ai/forall/releases) before install succeeds.
 
+## Examples
+
+See [`examples/hello-forall`](examples/hello-forall/) for a minimal `.forall/` project skeleton (what `forall init` creates).
+
 ## License
 
 Apache-2.0 — see [LICENSE](LICENSE). Prebuilt binaries may be subject to separate product terms.

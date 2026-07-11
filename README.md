@@ -1,5 +1,9 @@
 # Forall
 
+<a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square" /></a>
+<a href="https://discord.com/invite/gESuZkdD5R"><img alt="Discord" src="https://img.shields.io/badge/Discord-community-5865F2?style=flat-square&logo=discord&logoColor=white" /></a>
+
+
 Forall is a coding agent for spec-driven development and verification.
 
 This repository distributes the **Forall CLI** (prebuilt binaries), documentation, and community assets. The agent source is not published here.

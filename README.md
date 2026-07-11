@@ -1,8 +1,8 @@
 <div align="left">
 
-<h1>Forall</h1>
+<h1>Forall (∀)</h1>
 
-<p>Forall is a coding agent from Astrio that helps developers build correct software by generating code alongside machine-checkable proofs.</p>
+<p>Forall is a coding agent from Astrio that helps developers build correct software by generating spec-driven code alongside machine-checkable proofs.</p>
 
 <p>
   <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square" /></a>

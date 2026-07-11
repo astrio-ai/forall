@@ -1,5 +1,3 @@
 # Examples
 
-| Example | Description |
-|---------|-------------|
-| [`hello-forall`](hello-forall/) | Minimal `.forall/` project skeleton (`forall init` output) |
+Example projects and workflows will be added here.

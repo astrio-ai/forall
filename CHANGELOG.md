@@ -4,7 +4,7 @@ All notable changes to this public repository are documented here.
 
 ## Unreleased
 
-- Add `examples/hello-forall` with a minimal `.forall/` project skeleton.
+- Add a `.forall/` project skeleton at the repo root.
 
 ## v0.1.0
 

@@ -16,7 +16,7 @@
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/astrio-ai/forall/main/install.sh | bash
+curl -fsSL https://forall.astrio.app/install.sh | bash
 ```
 
 Add `~/.local/bin` to your `PATH` if needed, then run `forall --version`.

@@ -1,0 +1,27 @@
+[package]
+name = "forall-mcp-author"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "forall_mcp_author"
+path = "src/lib.rs"
+doctest = false
+
+[lints]
+workspace = true
+
+[dependencies]
+anyhow = { workspace = true }
+forall-authoring = { workspace = true }
+rmcp = { workspace = true, features = ["server", "schemars", "transport-io"] }
+schemars = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+tokio = { workspace = true, features = ["io-std", "macros", "rt-multi-thread"] }
+
+[dev-dependencies]
+rmcp = { workspace = true, features = ["client", "transport-io"] }
+sha2 = { workspace = true }
+tempfile = { workspace = true }

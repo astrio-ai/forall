@@ -1,0 +1,40 @@
+mod client;
+mod dto;
+mod snapshot;
+
+pub use client::AuthError;
+pub use client::BearerToken;
+pub use client::BearerTokenProvider;
+pub use client::DEFAULT_HOSTED_MCP_ENDPOINT;
+pub use client::HostedVerificationClient;
+pub use client::HostedVerifyError;
+pub use client::StaticBearerTokenProvider;
+pub use dto::CancelVerificationResponse;
+pub use dto::ExplainVerificationRequest;
+pub use dto::ExplainVerificationResponse;
+pub use dto::ExplanationAudience;
+pub use dto::InlineFile;
+pub use dto::JobRequest;
+pub use dto::StatusVerificationResponse;
+pub use dto::SubmitVerificationRequest;
+pub use dto::SubmitVerificationResponse;
+pub use dto::VerificationIssue;
+pub use dto::VerificationIssueSeverity;
+pub use dto::VerificationJobError;
+pub use dto::VerificationPhase;
+pub use dto::VerificationPhaseStatus;
+pub use dto::VerificationProgress;
+pub use dto::VerificationResult;
+pub use dto::VerificationScope;
+pub use dto::VerificationSource;
+pub use dto::VerificationStatus;
+pub use dto::VerificationSummary;
+pub use snapshot::MAX_FILE_BYTES;
+pub use snapshot::MAX_SNAPSHOT_BYTES;
+pub use snapshot::MAX_SNAPSHOT_FILES;
+pub use snapshot::SnapshotError;
+pub use snapshot::SnapshotPacker;
+pub use snapshot::github_source;
+
+#[cfg(test)]
+mod tests;

@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/forall-authoring",
+    "crates/forall-mcp-author",
+    "crates/forall-hosted-verify",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+
+[workspace.dependencies]
+anyhow = "1"
+axum = { version = "0.8", default-features = false }
+forall-authoring = { path = "crates/forall-authoring" }
+regex = "1.12.3"
+reqwest = { version = "0.12", features = ["cookies"] }
+rmcp = { version = "1.7.0", default-features = false }
+schemars = "0.8.22"
+serde = "1"
+serde_json = "1"
+serde_yaml = "0.9"
+sha2 = "0.10"
+tempfile = "3.23.0"
+thiserror = "2.0.17"
+tokio = "1"
+walkdir = "2.5.0"
+
+[workspace.lints]
+rust = {}

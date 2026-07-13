@@ -9,7 +9,7 @@ Place annotations **inside** the function:
 ```ts
 export function clamp(x: number, lo: number, hi: number): number {
   //@ requires lo <= hi
-  //@ ensures lo <= $result && $result <= hi
+  //@ ensures lo <= result && result <= hi
   //@ contract Bounds clamp
   if (x < lo) return lo;
   if (x > hi) return hi;
@@ -19,7 +19,7 @@ export function clamp(x: number, lo: number, hi: number): number {
 
 Notes:
 
-- Use `$result` for the return value in ensures
+- Use `result` for the return value in ensures
 - Keep predicates decidable and local to the function
 - Avoid I/O, DOM, and network inside verified functions
 

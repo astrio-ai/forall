@@ -34,6 +34,27 @@ We are expanding to our popular programming languages based on the demand.
 
 Join our [Discord](https://discord.com/invite/gESuZkdD5R) and [X](https://x.com/AstrioAI) communities to connect with other developers using Forall. Get help, share feedback, and discuss your projects with the community.
 
+## Open-source adapters
+
+This repository includes Rust crates for Forall's local authoring and hosted
+verification adapters:
+
+- [`crates/forall-authoring`](crates/forall-authoring/) — workspace authoring library
+- [`crates/forall-mcp-author`](crates/forall-mcp-author/) — local authoring MCP server
+- [`crates/forall-hosted-verify`](crates/forall-hosted-verify/) — hosted verification client
+
+See [crates/README.md](crates/README.md) and the [architecture docs](docs/architecture.md)
+for how these relate to the standalone `forall` binary.
+
+Build and test the crates:
+
+```bash
+cargo test --workspace
+```
+
+The full agent runtime (TUI, turn loop, sandbox) is distributed only as the
+prebuilt binary above.
+
 ## License
 
 This repository is licensed under the [Apache-2.0 License](LICENSE).

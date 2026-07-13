@@ -144,7 +144,7 @@ For each `verified: true` requirement:
 ```ts
 export function clamp(x: number, lo: number, hi: number): number {
   //@ requires lo <= hi
-  //@ ensures lo <= $result && $result <= hi
+  //@ ensures lo <= result && result <= hi
   if (x < lo) return lo;
   if (x > hi) return hi;
   return x;

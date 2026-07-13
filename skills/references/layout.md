@@ -8,7 +8,6 @@ Paths are relative to the project root.
   AGENTS.md
   verify/
     mapping.yaml      # required marker
-    adapters.yaml     # proof routing by language
   workflow/
     config.yaml
   scenarios/          # optional *.property.ts
@@ -23,29 +22,6 @@ requirements: []
 ```
 
 Replace `requirements` when mapping symbols (see `mapping.md`).
-
-## `.forall/verify/adapters.yaml`
-
-```yaml
-backend: dafny
-strict: false
-adapters:
-  typescript:
-    proof: lemmascript-dafny
-    extensions: [ts, tsx]
-  rust:
-    proof: verus
-    extensions: [rs]
-  java:
-    proof: openjml
-    extensions: [java]
-  python:
-    proof: none
-    extensions: [py]
-```
-
-Omit unused language adapters if you prefer a minimal file; hosted check merges
-known defaults. Prefer writing the languages you actually map.
 
 ## `.forall/workflow/config.yaml`
 

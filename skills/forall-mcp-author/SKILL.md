@@ -2,7 +2,7 @@
 name: forall-mcp-author
 description: >-
   Author Forall verification artifacts for brownfield TypeScript, Java, or Rust
-  projects without the Forall CLI. Creates .forall layout, mapping, adapters,
+  projects without the Forall CLI. Creates .forall layout, mapping,
   and proof contracts, then hands off to hosted MCP verify. Use when the user
   wants Cursor/Claude/Codex to add machine-checked specs and call hosted
   forall_verify.
@@ -28,7 +28,7 @@ specs — it only checks what you commit to the workspace (or upload inline).
 
 - User asks to verify, prove, or Forall-ify a brownfield repo
 - Empty or skeleton `.forall/` exists but nothing is mapped
-- User wants Cursor / Claude Code / Codex + hosted MCP (no local provers)
+- User wants Cursor / Claude Code / Codex + hosted MCP
 
 ## Architecture
 
@@ -42,17 +42,17 @@ forall-mcp-verify skill / hosted MCP tools
 
 ## Languages
 
-| Language | Proof contracts | Adapter `proof` |
-|----------|-----------------|-----------------|
-| TypeScript / TSX | `//@ requires` / `//@ ensures` / `//@ contract` (+ companion `.dfy` when needed) | `lemmascript-dafny` |
-| Rust | inline Verus `requires` / `ensures` / `proof` | `verus` |
-| Java | JML `//@ requires` / `//@ ensures` above methods | `openjml` |
+| Language | Forall contract syntax |
+|----------|------------------------|
+| TypeScript / TSX | `//@ requires` / `//@ ensures` / `//@ contract` |
+| Rust | inline `requires` / `ensures` / `proof` |
+| Java | `//@ requires` / `//@ ensures` above methods |
 
 Read language details from:
 
-- `skills/references/lemmascript.md`
-- `skills/references/verus.md`
-- `skills/references/openjml.md`
+- `skills/references/typescript.md`
+- `skills/references/rust.md`
+- `skills/references/java.md`
 - `skills/references/mapping.md`
 - `skills/references/layout.md`
 
@@ -79,7 +79,6 @@ If `.forall/verify/mapping.yaml` is missing, create the layout from
   AGENTS.md
   verify/
     mapping.yaml
-    adapters.yaml
   workflow/
     config.yaml
   scenarios/          # optional property tests
@@ -89,7 +88,6 @@ If `.forall/verify/mapping.yaml` is missing, create the layout from
 Rules:
 
 - Never overwrite a non-empty `mapping.yaml` — merge requirements instead
-- Always write `adapters.yaml` with defaults for detected languages
 - Keep `version: 1` on mapping files
 
 ### 3. Discover candidates (brownfield)
@@ -99,7 +97,7 @@ Pick a small first slice (1–5 symbols), not the whole tree.
 **Heuristics (no CLI required):**
 
 1. Exported / public functions with clear pre/postconditions
-2. Already-annotated symbols (`//@`, Verus `requires`, JML)
+2. Already-annotated symbols (`//@`, `requires`, `ensures`)
 3. Pure functions (no network, filesystem, or DOM)
 
 For each candidate, record:
@@ -141,7 +139,7 @@ Copy full schema notes from `skills/references/mapping.md`.
 
 For each `verified: true` requirement:
 
-**TypeScript** — inside the function body (LemmaScript style):
+**TypeScript** — inside the function body:
 
 ```ts
 export function clamp(x: number, lo: number, hi: number): number {
@@ -153,11 +151,9 @@ export function clamp(x: number, lo: number, hi: number): number {
 }
 ```
 
-If proofs need lemmas, add a sibling `src/clamp.dfy` (see
-`skills/references/lemmascript.md`). Prefer simple contracts first; let hosted
-check reveal what’s missing.
+Prefer simple contracts first; let hosted check reveal what is missing.
 
-**Rust** — Verus specs on the function:
+**Rust** — Forall contracts on the function:
 
 ```rust
 pub fn clamp(x: u64, lo: u64, hi: u64) -> (result: u64)
@@ -168,10 +164,7 @@ pub fn clamp(x: u64, lo: u64, hi: u64) -> (result: u64)
 }
 ```
 
-Ensure `Cargo.toml` has `[package.metadata.verus] verify = true` when verifying
-Rust crates.
-
-**Java** — JML above the method:
+**Java** — Forall contracts above the method:
 
 ```java
 //@ requires lo <= hi;
@@ -197,8 +190,8 @@ Load `skills/forall-mcp-verify/SKILL.md` and run the verify loop.
 Prefer:
 
 1. **GitHub source** if the branch is pushed and public
-2. **Inline source** otherwise — upload `.forall/**`, mapped sources, adapters,
-   companion `.dfy` / Cargo / Java files needed for the check
+2. **Inline source** otherwise — upload `.forall/**`, mapped sources, and
+   supporting project files needed for the check
 
 ### 8. Fix and iterate
 
@@ -207,14 +200,13 @@ On CRITICAL proof/mapping failures:
 1. Call `forall_explain_verification` for opaque issues
 2. Fix contracts or implementation locally
 3. Re-submit verify
-4. Never set `verified: false` only to silence a toolchain or proof failure
+4. Never set `verified: false` only to silence a verification failure
 5. Never use `//@ assume` / unproven `assume()` to cheat
 
 ## Guardrails
 
 - Authoring = **local writes**; hosted MCP = **remote check only**
 - Start with 1–5 requirements; expand after the first green proofs phase
-- User-facing status: say **Forall verified** / **machine-checked** — do not
-  name LemmaScript, Dafny, Verus, or OpenJML unless debugging toolchain output
+- User-facing status: say **Forall verified** / **machine-checked**
 - Keep UI / presentation / HTTP orchestration spec-tracked
 - Do not invent private repo access — hosted GitHub source is public-only today

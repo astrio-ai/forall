@@ -12,9 +12,9 @@ Shared references:
 
 - [`references/layout.md`](./references/layout.md) — `.forall/` bootstrap
 - [`references/mapping.md`](./references/mapping.md) — mapping schema + examples
-- [`references/lemmascript.md`](./references/lemmascript.md) — TypeScript contracts
-- [`references/verus.md`](./references/verus.md) — Rust / Verus contracts
-- [`references/openjml.md`](./references/openjml.md) — Java / OpenJML contracts
+- [`references/typescript.md`](./references/typescript.md) — TypeScript contracts
+- [`references/rust.md`](./references/rust.md) — Rust contracts
+- [`references/java.md`](./references/java.md) — Java contracts
 
 ## Install (Cursor)
 

@@ -38,7 +38,6 @@ Before verify:
 2. At least one requirement is mapped, or you accept a structure-only pass
 3. `verified: true` requirements have contracts in source (see
    `skills/forall-mcp-author/SKILL.md` and `skills/references/`)
-4. `.forall/verify/adapters.yaml` covers the languages you map
 
 If mapping is empty, hosted check may succeed with structure warnings only —
 that is **not** useful verification. Author requirements first.
@@ -68,9 +67,7 @@ Optional: `subdirectory` for monorepos.
 Include every path the check needs:
 
 - `.forall/verify/mapping.yaml`
-- `.forall/verify/adapters.yaml`
 - mapped source files (`.ts` / `.tsx` / `.rs` / `.java`)
-- companion `.dfy` files for TypeScript proofs when present
 - `Cargo.toml` (+ crate sources) for Rust
 - property-test files under `.forall/scenarios/` when `property_tested: true`
 
@@ -80,7 +77,6 @@ Include every path the check needs:
     "type": "inline",
     "files": [
       { "path": ".forall/verify/mapping.yaml", "content": "..." },
-      { "path": ".forall/verify/adapters.yaml", "content": "..." },
       { "path": "src/clamp.ts", "content": "..." }
     ]
   },
@@ -153,8 +149,7 @@ Use explanations to drive local edits, then re-submit.
 - Fix X in file Y, then re-run hosted verify
 ```
 
-User-facing language: **Forall verified** / **machine-checked**. Do not name
-internal provers unless the user is debugging toolchain output.
+User-facing language: **Forall verified** / **machine-checked**.
 
 ## Guardrails
 

@@ -1,9 +1,6 @@
-# Rust / Verus contracts
+# Rust contracts
 
-Adapter: `rust` → `proof: verus`
-Extensions: `.rs`
-
-Specs live **inline** in Rust. There is no separate sync / `.dfy` step.
+Forall contracts live inline in `.rs` files.
 
 ## Annotation style
 
@@ -38,15 +35,6 @@ pub fn clamp(x: u64, lo: u64, hi: u64) -> u64
 ```
 
 Add `proof { ... }` blocks only when needed for non-trivial reasoning.
-
-## Cargo metadata
-
-Verified crates should include:
-
-```toml
-[package.metadata.verus]
-verify = true
-```
 
 When submitting inline files to hosted MCP, include `Cargo.toml` and the mapped
 crate sources.

@@ -1,9 +1,6 @@
-# Java / OpenJML contracts
+# Java contracts
 
-Adapter: `java` → `proof: openjml`
-Extensions: `.java`
-
-Specs are JML line comments **above** methods. No sync step.
+Forall contracts are `//@` line comments **above** methods.
 
 ## Annotation style
 
@@ -22,7 +19,7 @@ public class Clamp {
 Notes:
 
 - Use `\result` for the return value
-- Terminate JML clauses with `;`
+- Terminate contract clauses with `;`
 - Prefer `public static` pure helpers for the first proved slice
 
 ## Mapping
@@ -36,7 +33,7 @@ code:
 
 ## Proof scope (important)
 
-OpenJML ESC is strongest on **scalar** methods. First pass:
+Start with **scalar** methods:
 
 - Prove one method at a time (`clamp`, `shareFor`, …)
 - Keep array assembly, HTTP handlers, and multi-method orchestration
@@ -44,7 +41,7 @@ OpenJML ESC is strongest on **scalar** methods. First pass:
 
 Avoid until core lemmas pass:
 
-- JML `\sum` over arrays
+- Aggregate expressions over arrays
 - Recursive prefix-sum style postconditions
 - Heavy loop invariants tying multiple arrays together
 
@@ -59,4 +56,4 @@ Avoid until core lemmas pass:
 1. Read hosted `proofs` issues / `proof_detail`
 2. Simplify ensures; split methods if needed
 3. Keep hard array logic spec-tracked temporarily
-4. Never flip `verified: true` → false only to silence ESC failures on core logic
+4. Never flip `verified: true` → false only to silence failures on core logic

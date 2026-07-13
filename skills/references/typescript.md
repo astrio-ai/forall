@@ -1,15 +1,10 @@
-# TypeScript / LemmaScript contracts
+# TypeScript contracts
 
-Adapter: `typescript` → `proof: lemmascript-dafny`
-Extensions: `.ts`, `.tsx`
-
-Hosted check runs LemmaScript extract + Dafny proofs on mapped files.
-Contracts live in TypeScript as `//@` annotations. Companion `.dfy` files sit
-next to the source when lemmas or manual proof edits are needed.
+Forall contracts live in `.ts` and `.tsx` files as `//@` annotations.
 
 ## Annotation style
 
-Place annotations **inside** the function (LemmaScript extract style):
+Place annotations **inside** the function:
 
 ```ts
 export function clamp(x: number, lo: number, hi: number): number {
@@ -37,20 +32,6 @@ code:
   symbols: [clamp]
 ```
 
-## Companion Dafny files
-
-For `src/clamp.ts`, LemmaScript may use:
-
-- `src/clamp.dfy` — editable proof surface
-- generated merge artifacts (`.dfy.gen`, `.dfy.base`, `.dfy.merged`)
-
-Authoring guidance:
-
-1. Start with `//@` only and run hosted verify
-2. If proofs fail needing lemmas, add/edit `src/clamp.dfy`
-3. Never leave git conflict markers in `.dfy` / `.dfy.merged`
-4. When uploading inline to MCP, include both `.ts` and any `.dfy` siblings
-
 ## Good first targets
 
 - Bounds clamping, saturation arithmetic
@@ -68,5 +49,4 @@ Authoring guidance:
 
 1. Read `proofs` phase issues from hosted status
 2. Tighten `//@ requires` / `//@ ensures` or fix the implementation
-3. Add lemmas in `.dfy` only when the contract is already honest
-4. Re-verify — do not flip `verified: false` to silence failures
+3. Re-verify — do not flip `verified: false` to silence failures

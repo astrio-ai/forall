@@ -32,7 +32,7 @@ We are expanding to our popular programming languages based on the demand.
 
 ## Connect us
 
-Join our [Discord](https://discord.com/invite/gESuZkdD5R) and [X](https://x.com/AstrioAI) communities to connect with other developers using Forall. Get help, share feedback, and discuss your projects with the community.
+Join our [Discord](https://discord.com/invite/gESuZkdD5R) and [X](https://x.com/astriolabs) communities to connect with other developers using Forall. Get help, share feedback, and discuss your projects with the community.
 
 ## Open-source adapters
 

@@ -2,7 +2,7 @@
 # Forall installer — downloads compressed prebuilt binaries from GitHub Releases.
 set -euo pipefail
 
-REPO="${FORALL_INSTALL_REPO:-astrio-ai/forall}"
+REPO="${FORALL_INSTALL_REPO:-astrio-labs/forall}"
 INSTALL_DIR="${FORALL_INSTALL_DIR:-${HOME}/.local/bin}"
 BINARY_NAME="forall"
 
@@ -142,6 +142,12 @@ main() {
   if ! command -v "$BINARY_NAME" >/dev/null 2>&1; then
     info "Add to PATH: export PATH=\"${INSTALL_DIR}:\$PATH\""
   fi
+
+  info ""
+  info "Forall CLI installed. Run: forall"
+  info "Staying on Cursor / Claude / Codex? Skip the CLI — use MCP verify-only:"
+  info "  1. Create a key at https://forall.astrio.app/dashboard"
+  info "  2. npx @astrio/forall-mcp  (see packages/forall-mcp or docs/getting-started.md)"
 }
 
 main "$@"

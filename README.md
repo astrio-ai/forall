@@ -40,7 +40,7 @@ Join our [Discord](https://discord.com/invite/gESuZkdD5R) and [X](https://x.com/
 - [`crates/forall-hosted-verify`](crates/forall-hosted-verify/) — hosted verification client
 - [`packages/forall-mcp`](packages/forall-mcp/) — npm MCP bridge (`@astrio/forall-mcp`)
 
-See [crates/README.md](crates/README.md) and [docs/architecture.md](docs/architecture.md).
+See [crates/README.md](crates/README.md), [packages/README.md](packages/README.md), [docs/getting-started.md](docs/getting-started.md), and [docs/architecture.md](docs/architecture.md).
 
 Build and test the crates:
 

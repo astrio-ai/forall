@@ -4,6 +4,7 @@ All notable changes to this public repository are documented here.
 
 ## Unreleased
 
+- Open-source crates verified in sync with `astrio-labs/forall-core` (`agent/forall-hosted-verify`, `agent/workflow/src/authoring`) as of 2026-07-16.
 - Add a `.forall/` project skeleton at the repo root.
 
 ## v0.1.0

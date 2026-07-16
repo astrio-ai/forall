@@ -1,23 +1,38 @@
-# Getting Started
+# Getting started with Forall
 
-## Install
+Choose one path:
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/astrio-ai/forall/main/install.sh | bash
-```
+## 1. Forall CLI (full coding agent)
 
-The installer downloads the prebuilt `forall` binary for your platform into
-`~/.local/bin`. If that directory is not on your `PATH`, add it:
+Install and run Forall as your agent:
 
 ```bash
-export PATH="$HOME/.local/bin:$PATH"
+curl -fsSL https://forall.astrio.app/install.sh | bash
+forall
 ```
 
-Verify the install:
+On first launch, pick:
+
+| Option | What you do |
+|--------|-------------|
+| **Forall account** | Browser opens [forall.astrio.app/dashboard](https://forall.astrio.app/dashboard) → create a `forall_…` API key → paste it into the TUI → then choose a model provider (BYOK) for chat |
+| **Bring your own API key** | Skip the Forall key for now; set `OPENAI_API_KEY` / `OPENROUTER_API_KEY` in `~/.forall/.env` |
+
+CLI equivalent for the Forall key:
 
 ```bash
-forall --version
+printenv FORALL_API_KEY | forall verification login
+forall verification status
 ```
+
+Then initialize a project from a git repo root:
+
+```bash
+forall init
+forall
+```
+
+See [Project Layout](project-layout.md) and [Workflow](workflow.md).
 
 ### Supported platforms
 
@@ -27,25 +42,28 @@ forall --version
 | Linux | `x86_64`, `aarch64` |
 | Windows | `x86_64` |
 
-## Initialize a project
+## 2. MCP verify-only (Cursor / Claude Code / Codex)
 
-From the root of a git repository:
+Do **not** install the Forall CLI. Use the npm bridge with your existing agent:
 
-```bash
-forall init
+1. Create a key at [forall.astrio.app/dashboard](https://forall.astrio.app/dashboard)
+2. Configure MCP:
+
+```json
+{
+  "mcpServers": {
+    "forall": {
+      "command": "npx",
+      "args": ["-y", "@astrio/forall-mcp"],
+      "env": {
+        "FORALL_API_KEY": "forall_..."
+      }
+    }
+  }
+}
 ```
 
-This scaffolds a `.forall/` directory that marks the project root and holds the
-workflow and verification config. `forall init` is language-neutral — it only
-creates the workflow files.
+Hosted MCP only verifies. Your coding agent edits the workspace from the report.
 
-See [Project Layout](project-layout.md) for what gets created.
-
-## Start working
-
-```bash
-forall
-```
-
-From here, use the workflow to make changes with specs first. See
-[Workflow](workflow.md).
+See [Hosted Forall MCP](hosted-mcp.md), [packages/forall-mcp](../packages/forall-mcp/README.md), and
+[Architecture](architecture.md).

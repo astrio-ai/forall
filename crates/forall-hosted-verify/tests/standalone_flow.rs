@@ -11,12 +11,6 @@ use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::response::Response;
 use axum::routing::post;
-use forall_hosted_verify::HostedVerificationClient;
-use forall_hosted_verify::SnapshotPacker;
-use forall_hosted_verify::StaticBearerTokenProvider;
-use forall_hosted_verify::SubmitVerificationRequest;
-use forall_hosted_verify::VerificationScope;
-use forall_hosted_verify::VerificationSource;
 use forall_authoring::authoring;
 use forall_authoring::authoring::CanonicalRoot;
 use forall_authoring::authoring::ContractTarget;
@@ -26,6 +20,12 @@ use forall_authoring::authoring::ScaffoldContractsRequest;
 use forall_authoring::authoring::UpsertRequirementsRequest;
 use forall_authoring::mapping::schema::CodeRef;
 use forall_authoring::mapping::schema::Requirement;
+use forall_hosted_verify::HostedVerificationClient;
+use forall_hosted_verify::SnapshotPacker;
+use forall_hosted_verify::StaticBearerTokenProvider;
+use forall_hosted_verify::SubmitVerificationRequest;
+use forall_hosted_verify::VerificationScope;
+use forall_hosted_verify::VerificationSource;
 use serde_json::Value;
 
 async fn hosted_mcp(headers: HeaderMap, Json(body): Json<Value>) -> Response {

@@ -36,8 +36,8 @@ Before verify:
 
 1. `.forall/verify/mapping.yaml` exists (`version: 1`)
 2. At least one requirement is mapped, or you accept a structure-only pass
-3. `verified: true` requirements have contracts in source (see
-   `skills/forall-mcp-author/SKILL.md` and `skills/references/`)
+3. `.forall/verify/mapping.yaml` exists and requirements have contracts (see
+   `skills/references/`). Your host agent authors these — Forall MCP is verify-only.
 
 If mapping is empty, hosted check may succeed with structure warnings only —
 that is **not** useful verification. Author requirements first.

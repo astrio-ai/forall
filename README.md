@@ -21,7 +21,7 @@ curl -fsSL https://forall.astrio.app/install.sh | bash
 
 Add `~/.local/bin` to your `PATH` if needed, then run `forall --version`.
 
-> **Note:** A binary release must exist on [GitHub Releases](https://github.com/astrio-ai/forall/releases) before install succeeds.
+> **Note:** A binary release must exist on [GitHub Releases](https://github.com/astrio-labs/forall/releases) before install succeeds.
 
 ## Supported programming languages
 - TypeScript
@@ -34,17 +34,13 @@ We are expanding to our popular programming languages based on the demand.
 
 Join our [Discord](https://discord.com/invite/gESuZkdD5R) and [X](https://x.com/astriolabs) communities to connect with other developers using Forall. Get help, share feedback, and discuss your projects with the community.
 
-## Open-source adapters
-
-This repository includes Rust crates for Forall's local authoring and hosted
-verification adapters:
+## Open-source components
 
 - [`crates/forall-authoring`](crates/forall-authoring/) — workspace authoring library
-- [`crates/forall-mcp-author`](crates/forall-mcp-author/) — local authoring MCP server
 - [`crates/forall-hosted-verify`](crates/forall-hosted-verify/) — hosted verification client
+- [`packages/forall-mcp`](packages/forall-mcp/) — npm MCP bridge (`@astrio/forall-mcp`)
 
-See [crates/README.md](crates/README.md) and the [architecture docs](docs/architecture.md)
-for how these relate to the standalone `forall` binary.
+See [crates/README.md](crates/README.md) and [docs/architecture.md](docs/architecture.md).
 
 Build and test the crates:
 

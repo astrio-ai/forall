@@ -2,7 +2,6 @@
 resolver = "2"
 members = [
     "crates/forall-authoring",
-    "crates/forall-mcp-author",
     "crates/forall-hosted-verify",
 ]
 

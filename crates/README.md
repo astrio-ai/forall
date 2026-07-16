@@ -32,3 +32,14 @@ published here.
 
 External agents connect through [`@astrio/forall-mcp`](../packages/forall-mcp/README.md)
 for hosted verification only.
+
+## Syncing from `forall-core`
+
+Verified in sync with `astrio-labs/forall-core` as of 2026-07-16:
+
+| Public crate | Source in `forall-core` |
+| --- | --- |
+| `forall-authoring` | `agent/workflow/src/authoring/` + `mapping/schema` |
+| `forall-hosted-verify` | `agent/forall-hosted-verify/` |
+
+When copying updates, keep public integration tests on `forall_authoring::` imports.

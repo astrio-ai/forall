@@ -13,43 +13,57 @@
 
 </div>
 
-## Install
+## Two ways to use Forall
+
+### 1. Install Forall CLI
+
+Full coding agent — specs, proofs, and workflow in your terminal.
 
 ```bash
 curl -fsSL https://forall.astrio.app/install.sh | bash
+forall
 ```
 
 Add `~/.local/bin` to your `PATH` if needed, then run `forall --version`.
 
+On first launch, sign in with a [Forall account](https://forall.astrio.app/dashboard) (API key) or bring your own model API key (OpenAI / OpenRouter). Then `forall init` in a git repo and start working.
+
 > **Note:** A binary release must exist on [GitHub Releases](https://github.com/astrio-labs/forall/releases) before install succeeds.
 
+### 2. MCP verify-only
+
+Stay on Cursor, Claude Code, or Codex — add hosted verification via MCP. **Do not** install the CLI.
+
+1. Create an API key at [forall.astrio.app/dashboard](https://forall.astrio.app/dashboard)
+2. Add to your MCP client:
+
+```json
+{
+  "mcpServers": {
+    "forall": {
+      "command": "npx",
+      "args": ["-y", "@astrio/forall-mcp"],
+      "env": {
+        "FORALL_API_KEY": "forall_..."
+      }
+    }
+  }
+}
+```
+
+Your coding agent edits the workspace from verify reports. See [docs/getting-started.md](docs/getting-started.md) and [docs/hosted-mcp.md](docs/hosted-mcp.md).
+
 ## Supported programming languages
+
 - TypeScript
 - Java
 - Rust
 
-We are expanding to our popular programming languages based on the demand.
+We are expanding to more languages based on demand.
 
-## Connect us
+## Connect
 
-Join our [Discord](https://discord.com/invite/gESuZkdD5R) and [X](https://x.com/astriolabs) communities to connect with other developers using Forall. Get help, share feedback, and discuss your projects with the community.
-
-## Open-source components
-
-- [`crates/forall-authoring`](crates/forall-authoring/) — workspace authoring library
-- [`crates/forall-hosted-verify`](crates/forall-hosted-verify/) — hosted verification client
-- [`packages/forall-mcp`](packages/forall-mcp/) — npm MCP bridge (`@astrio/forall-mcp`)
-
-See [crates/README.md](crates/README.md), [packages/README.md](packages/README.md), [docs/getting-started.md](docs/getting-started.md), and [docs/architecture.md](docs/architecture.md).
-
-Build and test the crates:
-
-```bash
-cargo test --workspace
-```
-
-The full agent runtime (TUI, turn loop, sandbox) is distributed only as the
-prebuilt binary above.
+Join our [Discord](https://discord.com/invite/gESuZkdD5R) and [X](https://x.com/astriolabs) communities.
 
 ## License
 

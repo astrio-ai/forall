@@ -1,0 +1,40 @@
+{
+  "name": "@astrio/forall-mcp",
+  "version": "0.1.0",
+  "description": "Forall hosted verification MCP — stdio bridge for Cursor, Claude Code, and Codex",
+  "type": "module",
+  "bin": {
+    "forall-mcp": "./bin/forall-mcp.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node bin/forall-mcp.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "forall",
+    "verification",
+    "astrio"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astrio-labs/forall.git",
+    "directory": "packages/forall-mcp"
+  }
+}

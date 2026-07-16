@@ -1,18 +1,19 @@
 # Forall Documentation
 
-User-facing documentation for the Forall CLI.
-
 | Guide | What it covers |
 |-------|----------------|
-| [Getting Started](getting-started.md) | Install Forall and set up your first project |
+| [Getting Started](getting-started.md) | Two paths: Forall CLI vs MCP verify-only |
 | [Project Layout](project-layout.md) | The `.forall/` directory and what each file does |
 | [Workflow](workflow.md) | The propose → verify → archive change workflow |
-| [Architecture](architecture.md) | Standalone binary, open-source adapters, and hosted verification |
-| [Local Authoring MCP](local-authoring-mcp.md) | Optional stdio MCP for external coding agents |
-| [Hosted Forall MCP](hosted-mcp.md) | Remote verification service and client library |
+| [Architecture](architecture.md) | Two-path product model and open-source components |
+| [Hosted Forall MCP](hosted-mcp.md) | Remote verification, dashboard keys, npm bridge |
+
+## Packages
+
+- [`packages/forall-mcp`](../packages/forall-mcp/README.md) — `@astrio/forall-mcp` npm bridge
 
 ## Open-source crates
 
-The [crates](../crates/) directory publishes the Rust libraries behind Forall's
-authoring and hosted verification adapters. The full agent runtime is still
-distributed as the prebuilt `forall` CLI; see [crates/README.md](../crates/README.md).
+The [crates](../crates/) directory publishes the Rust libraries embedded by the
+`forall` binary. The full agent runtime is distributed as the prebuilt CLI; see
+[crates/README.md](../crates/README.md).

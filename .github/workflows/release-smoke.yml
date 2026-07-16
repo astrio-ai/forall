@@ -1,11 +1,12 @@
 name: Release smoke test
+
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - install.sh
-      - .github/workflows/release-smoke.yml
+      - '.github/workflows/release-smoke.yml'
 
 jobs:
   shellcheck:
@@ -16,3 +17,15 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y shellcheck
           shellcheck install.sh
+
+  install-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify install script metadata
+        run: |
+          set -euo pipefail
+          grep -q 'astrio-labs/forall' install.sh
+          grep -q 'FORALL_INSTALL_REPO' install.sh
+          grep -q 'forall.astrio.app/dashboard' install.sh
+          bash -n install.sh

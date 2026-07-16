@@ -146,7 +146,10 @@ pub fn summarize_verification(requirements: &[Requirement]) -> VerificationSumma
 
 pub fn validate_mapping(mapping: &Mapping) -> Result<(), String> {
     if mapping.version != 1 {
-        return Err(format!("mapping version must be 1, got {}", mapping.version));
+        return Err(format!(
+            "mapping version must be 1, got {}",
+            mapping.version
+        ));
     }
     for req in &mapping.requirements {
         if req.id.is_empty() {
@@ -164,15 +167,14 @@ pub fn validate_mapping(mapping: &Mapping) -> Result<(), String> {
                 req.id
             ));
         }
-        if req.property_tested {
-            if let Some(prop) = &req.property {
-                if prop.file.is_empty() {
-                    return Err(format!(
-                        "requirement '{}' property.file must not be empty",
-                        req.id
-                    ));
-                }
-            }
+        if req.property_tested
+            && let Some(prop) = &req.property
+            && prop.file.is_empty()
+        {
+            return Err(format!(
+                "requirement '{}' property.file must not be empty",
+                req.id
+            ));
         }
         if let Some(code) = &req.code {
             if code.file.is_empty() {

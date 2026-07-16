@@ -1,0 +1,54 @@
+name: Packages CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - '.github/workflows/packages.yml'
+  pull_request:
+    paths:
+      - 'packages/**'
+      - '.github/workflows/packages.yml'
+
+jobs:
+  forall-mcp:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/forall-mcp
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: packages/forall-mcp/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Syntax check
+        run: |
+          node --check bin/forall-mcp.js
+          node --check src/index.js
+
+      - name: Smoke test (missing API key)
+        run: |
+          set +e
+          output="$(node bin/forall-mcp.js 2>&1)"
+          status=$?
+          set -e
+          echo "$output"
+          test "$status" -ne 0
+          echo "$output" | grep -q "FORALL_API_KEY is required"
+
+      - name: Verify package metadata
+        run: |
+          node -e "
+            const pkg = require('./package.json');
+            if (pkg.name !== '@astrio/forall-mcp') throw new Error('unexpected package name');
+            if (!pkg.bin?.['forall-mcp']) throw new Error('missing bin.forall-mcp');
+            if (!pkg.engines?.node) throw new Error('missing engines.node');
+          "

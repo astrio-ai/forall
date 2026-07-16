@@ -1,0 +1,43 @@
+name: Docs CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'README.md'
+      - 'docs/**'
+      - 'skills/**'
+      - 'CHANGELOG.md'
+      - '.github/workflows/docs.yml'
+      - '.github/scripts/check-doc-links.sh'
+  pull_request:
+    paths:
+      - 'README.md'
+      - 'docs/**'
+      - 'skills/**'
+      - 'CHANGELOG.md'
+      - '.github/workflows/docs.yml'
+      - '.github/scripts/check-doc-links.sh'
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check internal markdown links
+        run: bash .github/scripts/check-doc-links.sh
+
+      - name: Verify required docs exist
+        run: |
+          set -euo pipefail
+          for path in \
+            docs/getting-started.md \
+            docs/hosted-mcp.md \
+            docs/architecture.md \
+            skills/forall-mcp-verify/SKILL.md; do
+            if [ ! -f "$path" ]; then
+              echo "::error::missing required doc: $path"
+              exit 1
+            fi
+          done

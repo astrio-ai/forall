@@ -1,0 +1,130 @@
+version: 1
+requirements:
+  - id: line-total-nonneg
+    capability: cart
+    requirement: a cart line total is never negative when unit price and quantity are non-negative
+    verified: true
+    scenarios:
+      - name: non-negative-inputs
+        kind: formal
+    code:
+      file: src/domain/money.ts
+      symbols: [lineTotal]
+    contract: "LineTotalNonNeg lineTotal"
+
+  - id: subtotal-nonneg
+    capability: cart
+    requirement: cart subtotal is never negative
+    verified: false
+    scenarios:
+      - name: empty-or-valid-cart
+        kind: manual
+    code:
+      file: src/domain/cart.ts
+      symbols: [subtotal]
+
+  - id: percent-discount-bounds
+    capability: coupons
+    requirement: a percent discount never returns a price above the original or below zero
+    verified: true
+    scenarios:
+      - name: twenty-percent-off
+        kind: formal
+    code:
+      file: src/domain/money.ts
+      symbols: [applyPercentDiscount]
+    contract: "PercentDiscountBounds applyPercentDiscount"
+
+  - id: fixed-discount-bounds
+    capability: coupons
+    requirement: a fixed discount never exceeds the price and never goes negative
+    verified: true
+    scenarios:
+      - name: fixed-amount-off
+        kind: formal
+    code:
+      file: src/domain/money.ts
+      symbols: [applyFixedDiscount]
+    contract: "FixedDiscountBounds applyFixedDiscount"
+
+  - id: max-discount-cap
+    capability: coupons
+    requirement: savings after discount never exceed the configured max-discount cap
+    verified: true
+    scenarios:
+      - name: cap-applied
+        kind: formal
+    code:
+      file: src/domain/money.ts
+      symbols: [applyDiscountCap]
+    contract: "MaxDiscountCap applyDiscountCap"
+
+  - id: single-coupon-bounds
+    capability: coupons
+    requirement: applying one coupon keeps the price between zero and the original subtotal
+    verified: false
+    scenarios:
+      - name: single-coupon
+        kind: manual
+    code:
+      file: src/domain/coupons.ts
+      symbols: [applyCoupon]
+
+  - id: tax-nonneg
+    capability: tax
+    requirement: computed tax is never negative when base and rate are non-negative
+    verified: true
+    scenarios:
+      - name: positive-rate
+        kind: formal
+    code:
+      file: src/domain/money.ts
+      symbols: [applyTax]
+    contract: "TaxNonNeg applyTax"
+
+  - id: shipping-fee-bounds
+    capability: shipping
+    requirement: shipping fee is either zero or the flat fee and never exceeds the flat fee
+    verified: true
+    scenarios:
+      - name: free-over-threshold
+        kind: formal
+      - name: flat-fee-under-threshold
+        kind: formal
+    code:
+      file: src/domain/money.ts
+      symbols: [shippingFee]
+    contract: "ShippingFeeBounds shippingFee"
+
+  - id: quote-composition
+    capability: quote
+    requirement: a quote total equals merchandise plus shipping plus tax
+    verified: false
+    scenarios:
+      - name: total-equals-parts
+        kind: manual
+    code:
+      file: src/domain/quote.ts
+      symbols: [buildQuote]
+
+  - id: catalog-sku-lookup
+    capability: catalog
+    requirement: quote requests resolve known SKUs to catalog prices
+    verified: false
+    scenarios:
+      - name: known-sku
+        kind: manual
+    code:
+      file: src/catalog/products.ts
+      symbols: [findProduct]
+
+  - id: quote-http-handler
+    capability: api
+    requirement: POST /quote returns a pricing quote for a well-formed request with known SKUs
+    verified: false
+    scenarios:
+      - name: well-formed-request
+        kind: manual
+    code:
+      file: src/api/quoteHandler.ts
+      symbols: [handleQuote]

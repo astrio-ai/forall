@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.tsbuildinfo
+**/*.dfy
+**/*.dfy.gen
+.forall/verified/reports/
+.forall/verified/claimcheck/

@@ -1,0 +1,10 @@
+schema: forall
+context: |
+  TypeScript checkout pricing service (integer cents).
+  Catalog SKUs → cart → one coupon → shipping → tax → quote.
+  Pure helpers in domain/money.ts are verified; orchestration and API are spec-tracked.
+rules:
+  verification:
+    - Run verification and fix CRITICAL issues before archive
+    - Keep verified: true on pure helpers in domain/money.ts
+    - Leave catalog, API, and orchestration as verified: false

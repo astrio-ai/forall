@@ -1,0 +1,15 @@
+backend: dafny
+strict: false
+adapters:
+  typescript:
+    proof: lemmascript-dafny
+    extensions: [ts, tsx]
+  python:
+    proof: none
+    extensions: [py]
+  rust:
+    proof: verus
+    extensions: [rs]
+  java:
+    proof: openjml
+    extensions: [java]

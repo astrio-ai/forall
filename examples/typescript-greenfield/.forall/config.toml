@@ -1,0 +1,2 @@
+# Generated to match `forall init` layout.
+project_root_markers = [".forall/verified/mapping.yaml"]

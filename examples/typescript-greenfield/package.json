@@ -1,0 +1,14 @@
+{
+  "name": "forall-example-typescript-greenfield",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Forall greenfield example: checkout pricing engine with proof contracts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

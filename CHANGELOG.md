@@ -7,6 +7,10 @@ All notable changes to this public repository are documented here.
 - Add open-source adapter crates: `forall-authoring` and `forall-hosted-verify`.
 - Add hosted MCP authoring skills and language contract references.
 - Hide verification implementation details from public skills.
+- Rewrite docs and README for the two-path model: Forall CLI vs `@astrio/forall-mcp` verify-only.
+- Remove deprecated Hybrid local-authoring MCP (`forall-mcp-author` crate and skill).
+- Install from gzip-compressed release archives, with fallback to raw binaries for older tags.
+- Point `install.sh` at `astrio-labs/forall` and hint at the MCP verify-only path.
 - Add `packages/forall-mcp` (`@astrio/forall-mcp` npm bridge source mirror).
 - Open-source crates verified in sync with `astrio-labs/forall-core` (`agent/forall-hosted-verify`, `agent/workflow/src/authoring`) as of 2026-07-16.
 

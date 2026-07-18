@@ -4,6 +4,9 @@ All notable changes to this public repository are documented here.
 
 ## Unreleased
 
+## v0.2.0
+
+- Prebuilt CLI binaries published as gzip-compressed GitHub Release archives.
 - Add open-source adapter crates: `forall-authoring` and `forall-hosted-verify`.
 - Add hosted MCP authoring skills and language contract references.
 - Hide verification implementation details from public skills.

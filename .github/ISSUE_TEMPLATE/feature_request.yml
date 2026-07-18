@@ -1,0 +1,51 @@
+name: Feature request
+description: Suggest a new feature or improvement for Forall
+title: "[Feat]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. Clear problem context helps us prioritize.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What do you want?
+      description: One or two sentences describing the feature or improvement.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the pain point or workflow gap today.
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which surface?
+      description: Where would this mainly show up?
+      options:
+        - Forall CLI (full agent)
+        - MCP verify-only (`@astrio/forall-mcp`)
+        - Docs / website / install
+        - Open-source crates or skills
+        - Unsure / multiple
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach (optional)
+      description: Sketch how you imagine it working. Mockups or examples welcome.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered (optional)
+      description: Other approaches you tried or considered.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Links, related issues, or anything else that helps.

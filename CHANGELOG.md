@@ -4,6 +4,9 @@ All notable changes to this public repository are documented here.
 
 ## Unreleased
 
+- Add open-source adapter crates: `forall-authoring` and `forall-hosted-verify`.
+- Add hosted MCP authoring skills and language contract references.
+- Hide verification implementation details from public skills.
 - Add `packages/forall-mcp` (`@astrio/forall-mcp` npm bridge source mirror).
 - Open-source crates verified in sync with `astrio-labs/forall-core` (`agent/forall-hosted-verify`, `agent/workflow/src/authoring`) as of 2026-07-16.
 

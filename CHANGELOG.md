@@ -13,6 +13,7 @@ All notable changes to this public repository are documented here.
 - Point `install.sh` at `astrio-labs/forall` and hint at the MCP verify-only path.
 - Add `packages/forall-mcp` (`@astrio/forall-mcp` npm bridge source mirror).
 - Open-source crates verified in sync with `astrio-labs/forall-core` (`agent/forall-hosted-verify`, `agent/workflow/src/authoring`) as of 2026-07-16.
+- Expand CI with packages checks, docs link verification, Rust fmt/clippy gates, and stronger release smoke tests.
 
 ## v0.1.0
 

@@ -6,9 +6,12 @@ All notable changes to this public repository are documented here.
 
 - Add `packages/forall-mcp` (`@astrio/forall-mcp` npm bridge source mirror).
 - Open-source crates verified in sync with `astrio-labs/forall-core` (`agent/forall-hosted-verify`, `agent/workflow/src/authoring`) as of 2026-07-16.
-- Add a `.forall/` project skeleton at the repo root.
 
 ## v0.1.0
 
 - Initial public tree: installer, documentation, and community assets.
 - Prebuilt CLI binaries published via GitHub Releases (not built from this repo).
+- Add user-facing docs: getting started, project layout, and workflow.
+- Add brand/CLI screenshot assets and a centered README hero.
+- Point the install command at `https://forall.astrio.app/install.sh`.
+- Add a `.forall/` project skeleton at the repo root.

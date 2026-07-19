@@ -4,6 +4,12 @@ All notable changes to this public repository are documented here.
 
 ## Unreleased
 
+## v0.2.1
+
+- Add a Feature request GitHub issue template.
+- Hide verification success cards on chat-only turns.
+- Clarify Specs tracked copy vs formal Verification passed in the TUI.
+
 ## v0.2.0
 
 - Prebuilt CLI binaries published as gzip-compressed GitHub Release archives.

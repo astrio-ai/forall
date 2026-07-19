@@ -6,8 +6,8 @@ All notable changes to this public repository are documented here.
 
 ## v0.3.0
 
-- Remove ChatGPT Apps, connectors, and remote control from the CLI.
-- Auth is `FORALL_API_KEY` / BYOK `OPENAI_API_KEY` only.
+- Remove apps, connectors, and remote control from the CLI.
+- Auth is `FORALL_API_KEY` / BYOK API keys only.
 - Refresh stale update-version cache when the running CLI is ahead of cached latest.
 - Ship prebuilt macOS, Linux, and Windows release archives.
 
